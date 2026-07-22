@@ -77,7 +77,7 @@ export function ScheduleBlockFormDialog({
                   value="EMPLEADO"
                   checked={scope === "EMPLEADO"}
                   onChange={() => setScope("EMPLEADO")}
-                  className="accent-emerald-600"
+                  className="accent-indigo-600"
                 />
                 Un empleado
               </label>
@@ -88,7 +88,7 @@ export function ScheduleBlockFormDialog({
                   value="NEGOCIO"
                   checked={scope === "NEGOCIO"}
                   onChange={() => setScope("NEGOCIO")}
-                  className="accent-emerald-600"
+                  className="accent-indigo-600"
                 />
                 Todo el negocio
               </label>
@@ -142,7 +142,7 @@ export function ScheduleBlockFormDialog({
             <Button type="button" variant="outline" onClick={() => onOpenChange(false)}>
               Cancelar
             </Button>
-            <Button type="submit" disabled={pending} className="bg-emerald-600 hover:bg-emerald-700">
+            <Button type="submit" disabled={pending} className="bg-indigo-600 hover:bg-indigo-700">
               {pending ? "Bloqueando..." : "Bloquear"}
             </Button>
           </div>

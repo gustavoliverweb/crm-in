@@ -34,11 +34,7 @@ export function TopBar({
 
   return (
     <header className="border-b border-slate-200 bg-white">
-      <div className="mx-auto flex max-w-[1600px] items-center gap-3 px-4 py-3">
-        <Link href="/" className="text-lg font-bold text-slate-900">
-          intalva
-        </Link>
-
+      <div className="mx-auto flex max-w-[1600px] items-center gap-3 px-6 py-3">
         <Button
           variant="outline"
           size="sm"
@@ -67,7 +63,7 @@ export function TopBar({
 
         <Button
           size="sm"
-          className="gap-1.5 bg-emerald-600 hover:bg-emerald-700"
+          className="gap-1.5 bg-indigo-600 hover:bg-indigo-700"
           nativeButton={false}
           render={
             <Link href="/agenda">

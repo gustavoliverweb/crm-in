@@ -249,7 +249,7 @@ export function AppointmentFormDialog({
               <Button type="button" variant="outline" onClick={() => onOpenChange(false)}>
                 Cerrar
               </Button>
-              <Button type="submit" disabled={pending} className="bg-emerald-600 hover:bg-emerald-700">
+              <Button type="submit" disabled={pending} className="bg-indigo-600 hover:bg-indigo-700">
                 {pending ? "Guardando..." : isEdit ? "Guardar cambios" : "Crear cita"}
               </Button>
             </div>

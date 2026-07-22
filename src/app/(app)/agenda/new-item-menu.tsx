@@ -47,7 +47,7 @@ export function NewItemMenu({
       <Dialog open={menuOpen} onOpenChange={setMenuOpen}>
         <DialogTrigger
           render={
-            <Button size="sm" className="gap-1.5 bg-emerald-600 hover:bg-emerald-700">
+            <Button size="sm" className="gap-1.5 bg-indigo-600 hover:bg-indigo-700">
               <Plus className="size-4" />
               Nuevo
             </Button>

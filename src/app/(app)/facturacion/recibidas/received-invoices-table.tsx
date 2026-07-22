@@ -103,7 +103,7 @@ export function ReceivedInvoicesTable({ rows }: { rows: ReceivedInvoiceRow[] }) 
           Subir Factura Recibida
         </Button>
         <Link href="/facturacion/recibidas/nueva">
-          <Button size="sm" className="gap-1.5 bg-emerald-600 hover:bg-emerald-700">
+          <Button size="sm" className="gap-1.5 bg-indigo-600 hover:bg-indigo-700">
             <Pencil className="size-4" />
             Entrada manual
           </Button>

@@ -139,7 +139,7 @@ export function InvoiceForm({
 
   return (
     <div className="space-y-4">
-      <Link href="/facturacion" className="text-sm text-emerald-700 hover:underline">
+      <Link href="/facturacion" className="text-sm text-indigo-700 hover:underline">
         ← Volver a facturas
       </Link>
 
@@ -463,7 +463,7 @@ export function InvoiceForm({
                 name="intent"
                 value="confirm"
                 disabled={pending || Boolean(invoice?.number)}
-                className="bg-emerald-600 hover:bg-emerald-700"
+                className="bg-indigo-600 hover:bg-indigo-700"
               >
                 {pending ? "Guardando..." : invoice?.number ? "Ya emitida" : "Emitir factura"}
               </Button>

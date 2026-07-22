@@ -132,7 +132,7 @@ export function BudgetForm({
 
   return (
     <div className="space-y-4">
-      <Link href="/presupuestos" className="text-sm text-emerald-700 hover:underline">
+      <Link href="/presupuestos" className="text-sm text-indigo-700 hover:underline">
         ← Volver a presupuestos
       </Link>
 
@@ -417,7 +417,7 @@ export function BudgetForm({
                 name="intent"
                 value="confirm"
                 disabled={pending}
-                className="bg-emerald-600 hover:bg-emerald-700"
+                className="bg-indigo-600 hover:bg-indigo-700"
               >
                 {pending ? "Guardando..." : "Confirmar y numerar"}
               </Button>

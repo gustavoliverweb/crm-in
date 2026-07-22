@@ -66,7 +66,7 @@ export function ClientesTabs({
           <TabsContent value="clientes" className="m-0 flex-none">
             <ClientFormDialog
               trigger={
-                <Button size="sm" className="gap-1.5 bg-emerald-600 hover:bg-emerald-700">
+                <Button size="sm" className="gap-1.5 bg-indigo-600 hover:bg-indigo-700">
                   <Plus className="size-4" />
                   Nuevo
                 </Button>
@@ -76,7 +76,7 @@ export function ClientesTabs({
           <TabsContent value="contactos" className="m-0 flex-none">
             <ContactFormDialog
               trigger={
-                <Button size="sm" className="gap-1.5 bg-emerald-600 hover:bg-emerald-700">
+                <Button size="sm" className="gap-1.5 bg-indigo-600 hover:bg-indigo-700">
                   <Plus className="size-4" />
                   Nuevo
                 </Button>

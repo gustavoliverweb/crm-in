@@ -115,7 +115,7 @@ export function PresupuestosTable({ rows }: { rows: BudgetRow[] }) {
       <div className="flex flex-wrap items-center justify-between gap-3">
         <div className="flex items-center gap-2">
           <Link href="/presupuestos/nuevo">
-            <Button size="sm" className="gap-1.5 bg-emerald-600 hover:bg-emerald-700">
+            <Button size="sm" className="gap-1.5 bg-indigo-600 hover:bg-indigo-700">
               <Plus className="size-4" />
               Nuevo presupuesto
             </Button>
@@ -194,7 +194,7 @@ export function PresupuestosTable({ rows }: { rows: BudgetRow[] }) {
                       <Button
                         variant="ghost"
                         size="icon-sm"
-                        className="text-slate-400 hover:text-emerald-600"
+                        className="text-slate-400 hover:text-indigo-600"
                         onClick={() => sendBudget(r.id)}
                       >
                         <Send className="size-4" />

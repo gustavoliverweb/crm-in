@@ -88,7 +88,7 @@ function NewProviderDialog({ onCreated }: { onCreated: (provider: ProviderOption
       <button
         type="button"
         onClick={() => setOpen(true)}
-        className="text-sm text-emerald-700 hover:underline"
+        className="text-sm text-indigo-700 hover:underline"
       >
         + Nuevo proveedor
       </button>
@@ -108,7 +108,7 @@ function NewProviderDialog({ onCreated }: { onCreated: (provider: ProviderOption
             <Button type="button" variant="outline" onClick={() => setOpen(false)}>
               Cancelar
             </Button>
-            <Button type="submit" disabled={pending} className="bg-emerald-600 hover:bg-emerald-700">
+            <Button type="submit" disabled={pending} className="bg-indigo-600 hover:bg-indigo-700">
               {pending ? "Creando..." : "Crear proveedor"}
             </Button>
           </div>
@@ -167,7 +167,7 @@ export function ReceivedInvoiceForm({
 
   return (
     <div className="space-y-4">
-      <Link href="/facturacion/recibidas" className="text-sm text-emerald-700 hover:underline">
+      <Link href="/facturacion/recibidas" className="text-sm text-indigo-700 hover:underline">
         ← Volver a recibidas
       </Link>
 
@@ -394,7 +394,7 @@ export function ReceivedInvoiceForm({
                   Cancelar
                 </Button>
               </Link>
-              <Button type="submit" disabled={pending} className="bg-emerald-600 hover:bg-emerald-700">
+              <Button type="submit" disabled={pending} className="bg-indigo-600 hover:bg-indigo-700">
                 {pending ? "Guardando..." : "Guardar factura"}
               </Button>
             </div>

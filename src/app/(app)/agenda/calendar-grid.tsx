@@ -126,7 +126,7 @@ export function CalendarGrid({
             key={day.toISOString()}
             className={cn(
               "border-l border-slate-100 py-2 text-center text-sm font-semibold",
-              isSameDay(day, new Date()) ? "text-emerald-600" : "text-slate-700",
+              isSameDay(day, new Date()) ? "text-indigo-600" : "text-slate-700",
             )}
           >
             {formatDayLabel(day)}

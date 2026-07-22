@@ -25,7 +25,7 @@ export function FacturacionNav() {
             className={cn(
               "border-b-2 pb-2 font-medium transition-colors",
               isActive
-                ? "border-emerald-500 text-slate-900"
+                ? "border-indigo-600 text-slate-900"
                 : "border-transparent text-slate-500 hover:text-slate-700",
             )}
           >

@@ -118,7 +118,7 @@ export function ContactFormDialog({
             <Button
               type="submit"
               disabled={pending}
-              className="bg-emerald-600 hover:bg-emerald-700"
+              className="bg-indigo-600 hover:bg-indigo-700"
             >
               {pending ? "Guardando..." : isEdit ? "Guardar cambios" : "Crear contacto"}
             </Button>
