@@ -81,9 +81,15 @@ function EventForm({
   const baseDate = item?.startsAt ?? defaultDate ?? new Date();
 
   return (
-    <form key={item?.id ?? "new-event"} action={formAction} className="space-y-4">
+    <form
+      key={item?.id ?? "new-event"}
+      action={formAction}
+      className="space-y-4"
+    >
       {state.error ? (
-        <p className="rounded-md bg-red-50 px-3 py-2 text-sm text-red-700">{state.error}</p>
+        <p className="rounded-md bg-red-50 px-3 py-2 text-sm text-red-700">
+          {state.error}
+        </p>
       ) : null}
 
       <div className="space-y-1">
@@ -110,7 +116,13 @@ function EventForm({
       <div className="grid grid-cols-3 gap-4">
         <div className="space-y-1">
           <Label htmlFor="date">Fecha</Label>
-          <Input id="date" name="date" type="date" defaultValue={formatDateInput(baseDate)} required />
+          <Input
+            id="date"
+            name="date"
+            type="date"
+            defaultValue={formatDateInput(baseDate)}
+            required
+          />
         </div>
         <div className="space-y-1">
           <Label htmlFor="time">Hora</Label>
@@ -166,7 +178,9 @@ function EventForm({
                 placeholder="cliente@email.com"
                 value={email}
                 onChange={(e) =>
-                  setGuestEmails((prev) => prev.map((v, idx) => (idx === i ? e.target.value : v)))
+                  setGuestEmails((prev) =>
+                    prev.map((v, idx) => (idx === i ? e.target.value : v)),
+                  )
                 }
               />
               {guestEmails.length > 1 ? (
@@ -175,7 +189,9 @@ function EventForm({
                   variant="ghost"
                   size="icon-sm"
                   className="text-slate-400 hover:text-red-600"
-                  onClick={() => setGuestEmails((prev) => prev.filter((_, idx) => idx !== i))}
+                  onClick={() =>
+                    setGuestEmails((prev) => prev.filter((_, idx) => idx !== i))
+                  }
                 >
                   <X className="size-4" />
                 </Button>
@@ -197,11 +213,21 @@ function EventForm({
       <div className="grid grid-cols-2 gap-4">
         <div className="space-y-1">
           <Label htmlFor="location">Ubicación</Label>
-          <Input id="location" name="location" placeholder="Sala / dirección / Online" defaultValue={item?.location ?? ""} />
+          <Input
+            id="location"
+            name="location"
+            placeholder="Sala / dirección / Online"
+            defaultValue={item?.location ?? ""}
+          />
         </div>
         <div className="space-y-1">
           <Label htmlFor="videoCallUrl">Videollamada</Label>
-          <Input id="videoCallUrl" name="videoCallUrl" placeholder="Enlace de Meet/Zoom..." defaultValue={item?.videoCallUrl ?? ""} />
+          <Input
+            id="videoCallUrl"
+            name="videoCallUrl"
+            placeholder="Enlace de Meet/Zoom..."
+            defaultValue={item?.videoCallUrl ?? ""}
+          />
         </div>
       </div>
 
@@ -232,7 +258,11 @@ function EventForm({
           <Button type="button" variant="outline" onClick={onClose}>
             Cerrar
           </Button>
-          <Button type="submit" disabled={pending} className="bg-indigo-600 hover:bg-indigo-700">
+          <Button
+            type="submit"
+            disabled={pending}
+            className="bg-primary hover:bg-[#00A3A8]"
+          >
             {pending ? "Guardando..." : isEdit ? "Guardar cambios" : "Crear"}
           </Button>
         </div>
@@ -266,9 +296,15 @@ function TaskForm({
   const baseDate = item?.startsAt ?? defaultDate ?? new Date();
 
   return (
-    <form key={item?.id ?? "new-task"} action={formAction} className="space-y-4">
+    <form
+      key={item?.id ?? "new-task"}
+      action={formAction}
+      className="space-y-4"
+    >
       {state.error ? (
-        <p className="rounded-md bg-red-50 px-3 py-2 text-sm text-red-700">{state.error}</p>
+        <p className="rounded-md bg-red-50 px-3 py-2 text-sm text-red-700">
+          {state.error}
+        </p>
       ) : null}
 
       <div className="space-y-1">
@@ -295,7 +331,13 @@ function TaskForm({
       <div className="grid grid-cols-3 gap-4">
         <div className="space-y-1">
           <Label htmlFor="date">Fecha</Label>
-          <Input id="date" name="date" type="date" defaultValue={formatDateInput(baseDate)} required />
+          <Input
+            id="date"
+            name="date"
+            type="date"
+            defaultValue={formatDateInput(baseDate)}
+            required
+          />
         </div>
         <div className="space-y-1">
           <Label htmlFor="time">Hora</Label>
@@ -368,7 +410,11 @@ function TaskForm({
           <Button type="button" variant="outline" onClick={onClose}>
             Cerrar
           </Button>
-          <Button type="submit" disabled={pending} className="bg-indigo-600 hover:bg-indigo-700">
+          <Button
+            type="submit"
+            disabled={pending}
+            className="bg-primary hover:bg-[#00A3A8]"
+          >
             {pending ? "Guardando..." : isEdit ? "Guardar cambios" : "Crear"}
           </Button>
         </div>
@@ -425,7 +471,9 @@ export function EventTaskFormDialog({
               onClick={() => setKind("evento")}
               className={cn(
                 "rounded-md py-1.5 text-sm font-medium transition-colors",
-                kind === "evento" ? "bg-white text-slate-900 shadow-sm" : "text-slate-500",
+                kind === "evento"
+                  ? "bg-white text-slate-900 shadow-sm"
+                  : "text-slate-500",
               )}
             >
               Reunión / Evento
@@ -435,7 +483,9 @@ export function EventTaskFormDialog({
               onClick={() => setKind("tarea")}
               className={cn(
                 "rounded-md py-1.5 text-sm font-medium transition-colors",
-                kind === "tarea" ? "bg-white text-slate-900 shadow-sm" : "text-slate-500",
+                kind === "tarea"
+                  ? "bg-white text-slate-900 shadow-sm"
+                  : "text-slate-500",
               )}
             >
               Tarea

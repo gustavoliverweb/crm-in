@@ -38,7 +38,10 @@ export function ScheduleBlockFormDialog({
   defaultDate?: Date;
   staffOptions: StaffOption[];
 }) {
-  const [state, formAction, pending] = useActionState(createScheduleBlock, initialState);
+  const [state, formAction, pending] = useActionState(
+    createScheduleBlock,
+    initialState,
+  );
   const wasPending = useRef(false);
   const [scope, setScope] = useState<"EMPLEADO" | "NEGOCIO">("EMPLEADO");
 
@@ -64,7 +67,9 @@ export function ScheduleBlockFormDialog({
 
         <form action={formAction} className="space-y-4">
           {state.error ? (
-            <p className="rounded-md bg-red-50 px-3 py-2 text-sm text-red-700">{state.error}</p>
+            <p className="rounded-md bg-red-50 px-3 py-2 text-sm text-red-700">
+              {state.error}
+            </p>
           ) : null}
 
           <div className="space-y-1">
@@ -119,30 +124,60 @@ export function ScheduleBlockFormDialog({
 
           <div className="space-y-1">
             <Label htmlFor="date">Fecha</Label>
-            <Input id="date" name="date" type="date" defaultValue={formatDateInput(baseDate)} required />
+            <Input
+              id="date"
+              name="date"
+              type="date"
+              defaultValue={formatDateInput(baseDate)}
+              required
+            />
           </div>
 
           <div className="grid grid-cols-2 gap-4">
             <div className="space-y-1">
               <Label htmlFor="startTime">Desde</Label>
-              <Input id="startTime" name="startTime" type="time" defaultValue="14:00" required />
+              <Input
+                id="startTime"
+                name="startTime"
+                type="time"
+                defaultValue="14:00"
+                required
+              />
             </div>
             <div className="space-y-1">
               <Label htmlFor="endTime">Hasta</Label>
-              <Input id="endTime" name="endTime" type="time" defaultValue="15:00" required />
+              <Input
+                id="endTime"
+                name="endTime"
+                type="time"
+                defaultValue="15:00"
+                required
+              />
             </div>
           </div>
 
           <div className="space-y-1">
             <Label htmlFor="reason">Motivo (opcional)</Label>
-            <Input id="reason" name="reason" placeholder="Comida, reunión, médico..." />
+            <Input
+              id="reason"
+              name="reason"
+              placeholder="Comida, reunión, médico..."
+            />
           </div>
 
           <div className="flex justify-end gap-2 pt-2">
-            <Button type="button" variant="outline" onClick={() => onOpenChange(false)}>
+            <Button
+              type="button"
+              variant="outline"
+              onClick={() => onOpenChange(false)}
+            >
               Cancelar
             </Button>
-            <Button type="submit" disabled={pending} className="bg-indigo-600 hover:bg-indigo-700">
+            <Button
+              type="submit"
+              disabled={pending}
+              className="bg-primary hover:bg-[#00A3A8]"
+            >
               {pending ? "Bloqueando..." : "Bloquear"}
             </Button>
           </div>

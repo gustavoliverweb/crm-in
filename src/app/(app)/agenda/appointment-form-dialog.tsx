@@ -11,8 +11,15 @@ import {
   DialogTitle,
 } from "@/components/ui/dialog";
 import { DeleteConfirmButton } from "@/components/delete-confirm-button";
-import { ClientSearchField, type ClientOption } from "@/components/client-search-field";
-import { formatDateInput, formatTimeInput, addMinutesToTime } from "./agenda-utils";
+import {
+  ClientSearchField,
+  type ClientOption,
+} from "@/components/client-search-field";
+import {
+  formatDateInput,
+  formatTimeInput,
+  addMinutesToTime,
+} from "./agenda-utils";
 import {
   createAppointment,
   updateAppointment,
@@ -36,7 +43,11 @@ export type AppointmentRecord = {
   professionalName: string | null;
 };
 
-export type ServiceOption = { id: string; name: string; durationMinutes: number | null };
+export type ServiceOption = {
+  id: string;
+  name: string;
+  durationMinutes: number | null;
+};
 export type StaffOption = { id: string; name: string };
 export type { ClientOption };
 
@@ -60,15 +71,22 @@ export function AppointmentFormDialog({
   clientOptions: ClientOption[];
 }) {
   const isEdit = Boolean(item);
-  const action = item ? updateAppointment.bind(null, item.id) : createAppointment;
+  const action = item
+    ? updateAppointment.bind(null, item.id)
+    : createAppointment;
   const [state, formAction, pending] = useActionState(action, initialState);
   const wasPending = useRef(false);
 
   const baseDate = item?.startsAt ?? defaultDate ?? new Date();
   const [time, setTime] = useState(formatTimeInput(baseDate));
   const [duration, setDuration] = useState(item?.durationMinutes ?? 60);
-  const [selectedClient, setSelectedClient] = useState<{ id: string; name: string } | null>(
-    item?.clientId && item.clientName ? { id: item.clientId, name: item.clientName } : null,
+  const [selectedClient, setSelectedClient] = useState<{
+    id: string;
+    name: string;
+  } | null>(
+    item?.clientId && item.clientName
+      ? { id: item.clientId, name: item.clientName }
+      : null,
   );
 
   useEffect(() => {
@@ -86,7 +104,9 @@ export function AppointmentFormDialog({
       setTime(formatTimeInput(d));
       setDuration(item?.durationMinutes ?? 60);
       setSelectedClient(
-        item?.clientId && item.clientName ? { id: item.clientId, name: item.clientName } : null,
+        item?.clientId && item.clientName
+          ? { id: item.clientId, name: item.clientName }
+          : null,
       );
     }
   }
@@ -102,7 +122,9 @@ export function AppointmentFormDialog({
 
         <form key={item?.id ?? "new"} action={formAction} className="space-y-4">
           {state.error ? (
-            <p className="rounded-md bg-red-50 px-3 py-2 text-sm text-red-700">{state.error}</p>
+            <p className="rounded-md bg-red-50 px-3 py-2 text-sm text-red-700">
+              {state.error}
+            </p>
           ) : null}
 
           <div className="space-y-1">
@@ -155,7 +177,13 @@ export function AppointmentFormDialog({
           <div className="grid grid-cols-3 gap-4">
             <div className="space-y-1">
               <Label htmlFor="date">Fecha</Label>
-              <Input id="date" name="date" type="date" defaultValue={formatDateInput(baseDate)} required />
+              <Input
+                id="date"
+                name="date"
+                type="date"
+                defaultValue={formatDateInput(baseDate)}
+                required
+              />
             </div>
             <div className="space-y-1">
               <Label htmlFor="time">Hora</Label>
@@ -179,7 +207,9 @@ export function AppointmentFormDialog({
               />
             </div>
           </div>
-          <p className="-mt-2 text-xs text-slate-400">Termina a las {endTime}</p>
+          <p className="-mt-2 text-xs text-slate-400">
+            Termina a las {endTime}
+          </p>
 
           <div className="grid grid-cols-2 gap-4">
             <div className="space-y-1">
@@ -187,7 +217,7 @@ export function AppointmentFormDialog({
               <Input
                 id="location"
                 name="location"
-                placeholder='Dirección o «Online»'
+                placeholder="Dirección o «Online»"
                 defaultValue={item?.location ?? ""}
               />
             </div>
@@ -246,11 +276,23 @@ export function AppointmentFormDialog({
               <span />
             )}
             <div className="flex gap-2">
-              <Button type="button" variant="outline" onClick={() => onOpenChange(false)}>
+              <Button
+                type="button"
+                variant="outline"
+                onClick={() => onOpenChange(false)}
+              >
                 Cerrar
               </Button>
-              <Button type="submit" disabled={pending} className="bg-indigo-600 hover:bg-indigo-700">
-                {pending ? "Guardando..." : isEdit ? "Guardar cambios" : "Crear cita"}
+              <Button
+                type="submit"
+                disabled={pending}
+                className="bg-primary hover:bg-[#00A3A8]"
+              >
+                {pending
+                  ? "Guardando..."
+                  : isEdit
+                    ? "Guardar cambios"
+                    : "Crear cita"}
               </Button>
             </div>
           </div>
