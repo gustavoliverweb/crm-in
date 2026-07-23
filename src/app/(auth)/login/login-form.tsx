@@ -46,7 +46,10 @@ export default function LoginForm({ callbackUrl }: { callbackUrl: string }) {
         </div>
 
         <div className="space-y-1">
-          <label htmlFor="password" className="text-sm font-medium text-slate-700">
+          <label
+            htmlFor="password"
+            className="text-sm font-medium text-slate-700"
+          >
             Contraseña
           </label>
           <input
@@ -62,14 +65,17 @@ export default function LoginForm({ callbackUrl }: { callbackUrl: string }) {
       <button
         type="submit"
         disabled={pending}
-        className="w-full rounded-lg bg-indigo-600 px-3 py-2.5 text-sm font-semibold text-white hover:bg-indigo-700 disabled:opacity-60"
+        className="w-full rounded-lg bg-primary hover:bg-[#00A3A8] px-3 py-2.5 text-sm font-semibold text-white disabled:opacity-60 cursor-pointer"
       >
         {pending ? "Entrando..." : "Entrar"}
       </button>
 
       <p className="text-center text-sm text-slate-500">
         ¿No tienes cuenta?{" "}
-        <Link href="/registro" className="font-medium text-indigo-600 hover:underline">
+        <Link
+          href="/registro"
+          className="font-medium text-indigo-600 hover:underline"
+        >
           Crea una
         </Link>
       </p>

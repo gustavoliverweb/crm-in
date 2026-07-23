@@ -1,4 +1,6 @@
 import { Check } from "lucide-react";
+import logo from "../../../public/logo.png";
+import Image from "next/image";
 
 const highlights = [
   "Clientes, agenda y presupuestos conectados",
@@ -16,7 +18,7 @@ export default function AuthLayout({
       <div className="flex w-full flex-col justify-center px-6 py-12 sm:px-12 lg:w-1/2 lg:px-20">
         <div className="mx-auto w-full max-w-sm">
           <div className="mb-10 text-lg font-extrabold tracking-tight text-indigo-600">
-            intalva
+            <Image src={logo} alt="Logo" width={80} height={80} />
           </div>
           {children}
         </div>
