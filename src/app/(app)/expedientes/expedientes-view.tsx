@@ -5,7 +5,14 @@ import { Plus, Search } from "lucide-react";
 import { Input } from "@/components/ui/input";
 import { Button } from "@/components/ui/button";
 import { Badge } from "@/components/ui/badge";
-import { Table, TableBody, TableCell, TableHead, TableHeader, TableRow } from "@/components/ui/table";
+import {
+  Table,
+  TableBody,
+  TableCell,
+  TableHead,
+  TableHeader,
+  TableRow,
+} from "@/components/ui/table";
 import { DeleteConfirmButton } from "@/components/delete-confirm-button";
 import type { ClientOption } from "@/components/client-search-field";
 import { EXPEDIENTE_STATUS_LABEL } from "@/lib/validations/expediente";
@@ -38,7 +45,9 @@ export function ExpedientesView({
     const q = query.trim().toLowerCase();
     if (!q) return expedientes;
     return expedientes.filter((e) =>
-      [e.name, e.number, e.clientName].filter(Boolean).some((v) => v!.toLowerCase().includes(q)),
+      [e.name, e.number, e.clientName]
+        .filter(Boolean)
+        .some((v) => v!.toLowerCase().includes(q)),
     );
   }, [expedientes, query]);
 
@@ -52,7 +61,10 @@ export function ExpedientesView({
             clientOptions={clientOptions}
             staffOptions={staffOptions}
             trigger={
-              <Button size="sm" className="gap-1.5 bg-indigo-600 hover:bg-indigo-700">
+              <Button
+                size="sm"
+                className="gap-1.5 bg-primary hover:bg-[#00A3A8]"
+              >
                 <Plus className="size-4" />
                 Nuevo expediente
               </Button>
@@ -85,7 +97,10 @@ export function ExpedientesView({
           <TableBody>
             {filtered.length === 0 ? (
               <TableRow>
-                <TableCell colSpan={5} className="py-8 text-center text-slate-400">
+                <TableCell
+                  colSpan={5}
+                  className="py-8 text-center text-slate-400"
+                >
                   Sin expedientes.
                 </TableCell>
               </TableRow>
@@ -97,14 +112,22 @@ export function ExpedientesView({
                       expediente={expediente}
                       clientOptions={clientOptions}
                       staffOptions={staffOptions}
-                      trigger={<button className="hover:underline">{expediente.name}</button>}
+                      trigger={
+                        <button className="hover:underline">
+                          {expediente.name}
+                        </button>
+                      }
                     />
                     {expediente.number ? (
-                      <span className="ml-1 text-xs text-slate-400">#{expediente.number}</span>
+                      <span className="ml-1 text-xs text-slate-400">
+                        #{expediente.number}
+                      </span>
                     ) : null}
                   </TableCell>
                   <TableCell className="text-slate-600">
-                    {[expediente.type, expediente.vatRegime].filter(Boolean).join(" · ") || "—"}
+                    {[expediente.type, expediente.vatRegime]
+                      .filter(Boolean)
+                      .join(" · ") || "—"}
                   </TableCell>
                   <TableCell>{expediente.clientName ?? "—"}</TableCell>
                   <TableCell>

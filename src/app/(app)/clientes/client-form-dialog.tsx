@@ -71,7 +71,9 @@ export function ClientFormDialog({
       <DialogTrigger render={trigger} />
       <DialogContent className="max-h-[90vh] max-w-2xl overflow-y-auto">
         <DialogHeader>
-          <DialogTitle>{isEdit ? "Editar cliente" : "Nuevo cliente"}</DialogTitle>
+          <DialogTitle>
+            {isEdit ? "Editar cliente" : "Nuevo cliente"}
+          </DialogTitle>
         </DialogHeader>
 
         <form
@@ -115,7 +117,11 @@ export function ClientFormDialog({
 
             <div className="space-y-1">
               <Label htmlFor="taxId">NIF / DNI / CIF</Label>
-              <Input id="taxId" name="taxId" defaultValue={client?.taxId ?? ""} />
+              <Input
+                id="taxId"
+                name="taxId"
+                defaultValue={client?.taxId ?? ""}
+              />
             </div>
             <div className="space-y-1">
               <Label htmlFor="clientCode">Código de cliente</Label>
@@ -164,7 +170,11 @@ export function ClientFormDialog({
 
             <div className="col-span-2 space-y-1">
               <Label htmlFor="address">Dirección</Label>
-              <Input id="address" name="address" defaultValue={client?.address ?? ""} />
+              <Input
+                id="address"
+                name="address"
+                defaultValue={client?.address ?? ""}
+              />
             </div>
 
             <div className="space-y-1">
@@ -182,7 +192,11 @@ export function ClientFormDialog({
 
             <div className="space-y-1">
               <Label htmlFor="province">Provincia</Label>
-              <Input id="province" name="province" defaultValue={client?.province ?? ""} />
+              <Input
+                id="province"
+                name="province"
+                defaultValue={client?.province ?? ""}
+              />
             </div>
             <div className="space-y-1">
               <Label htmlFor="region">Comunidad Autónoma</Label>
@@ -214,7 +228,9 @@ export function ClientFormDialog({
               <Input
                 id="tags"
                 name="tags"
-                defaultValue={client?.tags.map((t) => t.tag.name).join(", ") ?? ""}
+                defaultValue={
+                  client?.tags.map((t) => t.tag.name).join(", ") ?? ""
+                }
               />
             </div>
 
@@ -262,9 +278,13 @@ export function ClientFormDialog({
             <Button
               type="submit"
               disabled={pending}
-              className="bg-indigo-600 hover:bg-indigo-700"
+              className="bg-primary hover:bg-[#00A3A8]"
             >
-              {pending ? "Guardando..." : isEdit ? "Guardar cambios" : "Crear cliente"}
+              {pending
+                ? "Guardando..."
+                : isEdit
+                  ? "Guardar cambios"
+                  : "Crear cliente"}
             </Button>
           </div>
         </form>

@@ -63,7 +63,7 @@ export function TopBar({
 
         <Button
           size="sm"
-          className="gap-1.5 bg-indigo-600 hover:bg-indigo-700"
+          className="gap-1.5 bg-primary hover:bg-[#00A3A8]"
           nativeButton={false}
           render={
             <Link href="/agenda">
@@ -100,8 +100,15 @@ export function TopBar({
                 <DropdownMenuLabel>Cambiar de negocio</DropdownMenuLabel>
                 <DropdownMenuSeparator />
                 {memberships.map((m) => (
-                  <form key={m.organizationId} action={switchOrganizationAction}>
-                    <input type="hidden" name="organizationId" value={m.organizationId} />
+                  <form
+                    key={m.organizationId}
+                    action={switchOrganizationAction}
+                  >
+                    <input
+                      type="hidden"
+                      name="organizationId"
+                      value={m.organizationId}
+                    />
                     <DropdownMenuItem
                       nativeButton
                       render={

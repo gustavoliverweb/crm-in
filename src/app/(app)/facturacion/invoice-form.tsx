@@ -15,13 +15,26 @@ import {
   TableRow,
 } from "@/components/ui/table";
 import { DeleteConfirmButton } from "@/components/delete-confirm-button";
-import { ClientSearchField, type ClientOption } from "@/components/client-search-field";
+import {
+  ClientSearchField,
+  type ClientOption,
+} from "@/components/client-search-field";
 import { formatDateInput, addDaysToDate } from "@/lib/date-utils";
 import { computeLineTotals, formatEUR } from "@/lib/money-utils";
 import { INVOICE_STATUS_LABEL } from "@/lib/validations/invoice";
-import { createInvoice, updateInvoice, deleteInvoice, type InvoiceFormState } from "./actions";
+import {
+  createInvoice,
+  updateInvoice,
+  deleteInvoice,
+  type InvoiceFormState,
+} from "./actions";
 
-export type CatalogOption = { id: string; name: string; basePrice: number; vatRate: number };
+export type CatalogOption = {
+  id: string;
+  name: string;
+  basePrice: number;
+  vatRate: number;
+};
 export type AppointmentOption = {
   id: string;
   label: string;
@@ -43,7 +56,11 @@ export type InvoiceRecord = {
   verifactuHash: string | null;
   verifactuQrData: string | null;
   verifactuQrImage: string | null;
-  verifactuSubmissionStatus: "NO_CONFIGURADO" | "PENDIENTE_ENVIO" | "ENVIADO" | "ERROR";
+  verifactuSubmissionStatus:
+    | "NO_CONFIGURADO"
+    | "PENDIENTE_ENVIO"
+    | "ENVIADO"
+    | "ERROR";
   verifactuSubmissionError: string | null;
   lines: {
     catalogItemId: string | null;
@@ -65,14 +82,20 @@ type DraftLine = {
   vatRate: number;
 };
 
-const VERIFACTU_STATUS_LABEL: Record<InvoiceRecord["verifactuSubmissionStatus"], string> = {
+const VERIFACTU_STATUS_LABEL: Record<
+  InvoiceRecord["verifactuSubmissionStatus"],
+  string
+> = {
   NO_CONFIGURADO: "Sin configurar",
   PENDIENTE_ENVIO: "Preparado — pendiente de certificado",
   ENVIADO: "Enviado a la AEAT",
   ERROR: "Error de envío",
 };
 
-const VERIFACTU_STATUS_STYLES: Record<InvoiceRecord["verifactuSubmissionStatus"], string> = {
+const VERIFACTU_STATUS_STYLES: Record<
+  InvoiceRecord["verifactuSubmissionStatus"],
+  string
+> = {
   NO_CONFIGURADO: "bg-slate-100 text-slate-600",
   PENDIENTE_ENVIO: "bg-amber-100 text-amber-800",
   ENVIADO: "bg-emerald-100 text-emerald-800",
@@ -103,12 +126,24 @@ export function InvoiceForm({
     (invoice?.lines ?? []).map((l, i) => ({ ...l, key: i })),
   );
   const [discountPct, setDiscountPct] = useState(invoice?.discountPct ?? 0);
-  const [dueDate, setDueDate] = useState(invoice?.dueDate ? formatDateInput(invoice.dueDate) : "");
-  const [selectedClient, setSelectedClient] = useState<{ id: string; name: string } | null>(
-    invoice?.clientId && invoice.clientName ? { id: invoice.clientId, name: invoice.clientName } : null,
+  const [dueDate, setDueDate] = useState(
+    invoice?.dueDate ? formatDateInput(invoice.dueDate) : "",
+  );
+  const [selectedClient, setSelectedClient] = useState<{
+    id: string;
+    name: string;
+  } | null>(
+    invoice?.clientId && invoice.clientName
+      ? { id: invoice.clientId, name: invoice.clientName }
+      : null,
   );
 
-  function addLine(item: { description: string; unitPrice: number; vatRate: number; catalogItemId?: string | null }) {
+  function addLine(item: {
+    description: string;
+    unitPrice: number;
+    vatRate: number;
+    catalogItemId?: string | null;
+  }) {
     setLines((prev) => [
       ...prev,
       {
@@ -128,7 +163,9 @@ export function InvoiceForm({
   }
 
   function updateLine(key: number, patch: Partial<DraftLine>) {
-    setLines((prev) => prev.map((l) => (l.key === key ? { ...l, ...patch } : l)));
+    setLines((prev) =>
+      prev.map((l) => (l.key === key ? { ...l, ...patch } : l)),
+    );
   }
 
   function removeLine(key: number) {
@@ -139,14 +176,19 @@ export function InvoiceForm({
 
   return (
     <div className="space-y-4">
-      <Link href="/facturacion" className="text-sm text-indigo-700 hover:underline">
+      <Link
+        href="/facturacion"
+        className="text-sm text-indigo-700 hover:underline"
+      >
         ← Volver a facturas
       </Link>
 
       <div className="rounded-lg border border-slate-200 bg-white p-6">
         <div className="mb-4 flex items-center justify-between">
           <h1 className="text-xl font-bold text-slate-900">
-            {isEdit ? `Factura ${invoice?.number ?? "(borrador)"}` : "Nueva factura (borrador)"}
+            {isEdit
+              ? `Factura ${invoice?.number ?? "(borrador)"}`
+              : "Nueva factura (borrador)"}
           </h1>
           <Link href="/facturacion">
             <Button variant="ghost" size="icon-sm">
@@ -157,7 +199,9 @@ export function InvoiceForm({
 
         <form action={formAction} className="space-y-4">
           {state.error ? (
-            <p className="rounded-md bg-red-50 px-3 py-2 text-sm text-red-700">{state.error}</p>
+            <p className="rounded-md bg-red-50 px-3 py-2 text-sm text-red-700">
+              {state.error}
+            </p>
           ) : null}
 
           <div className="grid grid-cols-4 gap-4">
@@ -183,7 +227,13 @@ export function InvoiceForm({
             </div>
             <div className="space-y-1">
               <Label htmlFor="irpfRate">IRPF %</Label>
-              <Input id="irpfRate" name="irpfRate" type="number" step="0.01" defaultValue={invoice?.irpfRate ?? 0} />
+              <Input
+                id="irpfRate"
+                name="irpfRate"
+                type="number"
+                step="0.01"
+                defaultValue={invoice?.irpfRate ?? 0}
+              />
             </div>
           </div>
 
@@ -208,7 +258,11 @@ export function InvoiceForm({
                 <button
                   key={preset.label}
                   type="button"
-                  onClick={() => setDueDate(formatDateInput(addDaysToDate(new Date(), preset.days)))}
+                  onClick={() =>
+                    setDueDate(
+                      formatDateInput(addDaysToDate(new Date(), preset.days)),
+                    )
+                  }
                   className="rounded-full border border-slate-200 px-3 py-1 text-xs font-medium text-slate-500 hover:bg-slate-50"
                 >
                   {preset.label}
@@ -221,8 +275,16 @@ export function InvoiceForm({
             <select
               value=""
               onChange={(e) => {
-                const item = serviceOptions.find((s) => s.id === e.target.value);
-                if (item) addLine({ description: item.name, unitPrice: item.basePrice, vatRate: item.vatRate, catalogItemId: item.id });
+                const item = serviceOptions.find(
+                  (s) => s.id === e.target.value,
+                );
+                if (item)
+                  addLine({
+                    description: item.name,
+                    unitPrice: item.basePrice,
+                    vatRate: item.vatRate,
+                    catalogItemId: item.id,
+                  });
               }}
               className="h-8 w-full rounded-lg border border-slate-200 bg-slate-50 px-2.5 text-sm text-slate-500"
             >
@@ -236,8 +298,16 @@ export function InvoiceForm({
             <select
               value=""
               onChange={(e) => {
-                const item = productOptions.find((p) => p.id === e.target.value);
-                if (item) addLine({ description: item.name, unitPrice: item.basePrice, vatRate: item.vatRate, catalogItemId: item.id });
+                const item = productOptions.find(
+                  (p) => p.id === e.target.value,
+                );
+                if (item)
+                  addLine({
+                    description: item.name,
+                    unitPrice: item.basePrice,
+                    vatRate: item.vatRate,
+                    catalogItemId: item.id,
+                  });
               }}
               className="h-8 w-full rounded-lg border border-slate-200 bg-slate-50 px-2.5 text-sm text-slate-500"
             >
@@ -251,7 +321,9 @@ export function InvoiceForm({
             <select
               value=""
               onChange={(e) => {
-                const item = appointmentOptions.find((a) => a.id === e.target.value);
+                const item = appointmentOptions.find(
+                  (a) => a.id === e.target.value,
+                );
                 if (item) addLine(item);
               }}
               className="h-8 w-full rounded-lg border border-slate-200 bg-slate-50 px-2.5 text-sm text-slate-500"
@@ -265,14 +337,22 @@ export function InvoiceForm({
             </select>
           </div>
 
-          <Button type="button" variant="outline" size="sm" className="gap-1.5" onClick={addBlankLine}>
+          <Button
+            type="button"
+            variant="outline"
+            size="sm"
+            className="gap-1.5"
+            onClick={addBlankLine}
+          >
             <Plus className="size-4" />
             Línea manual
           </Button>
 
           <div className="rounded-lg border border-slate-200">
             {lines.length === 0 ? (
-              <p className="py-8 text-center text-sm text-slate-400">Sin líneas.</p>
+              <p className="py-8 text-center text-sm text-slate-400">
+                Sin líneas.
+              </p>
             ) : (
               <Table>
                 <TableHeader>
@@ -289,16 +369,26 @@ export function InvoiceForm({
                 <TableBody>
                   {lines.map((line) => {
                     const lineTotal =
-                      line.quantity * line.unitPrice * (1 - line.discountPct / 100) *
+                      line.quantity *
+                      line.unitPrice *
+                      (1 - line.discountPct / 100) *
                       (1 + line.vatRate / 100);
                     return (
                       <TableRow key={line.key}>
                         <TableCell>
-                          <input type="hidden" name="lineCatalogItemId" value={line.catalogItemId ?? ""} />
+                          <input
+                            type="hidden"
+                            name="lineCatalogItemId"
+                            value={line.catalogItemId ?? ""}
+                          />
                           <Input
                             name="lineDescription"
                             value={line.description}
-                            onChange={(e) => updateLine(line.key, { description: e.target.value })}
+                            onChange={(e) =>
+                              updateLine(line.key, {
+                                description: e.target.value,
+                              })
+                            }
                             required
                           />
                         </TableCell>
@@ -308,7 +398,11 @@ export function InvoiceForm({
                             type="number"
                             step="0.01"
                             value={line.quantity}
-                            onChange={(e) => updateLine(line.key, { quantity: Number(e.target.value) })}
+                            onChange={(e) =>
+                              updateLine(line.key, {
+                                quantity: Number(e.target.value),
+                              })
+                            }
                           />
                         </TableCell>
                         <TableCell>
@@ -317,7 +411,11 @@ export function InvoiceForm({
                             type="number"
                             step="0.01"
                             value={line.unitPrice}
-                            onChange={(e) => updateLine(line.key, { unitPrice: Number(e.target.value) })}
+                            onChange={(e) =>
+                              updateLine(line.key, {
+                                unitPrice: Number(e.target.value),
+                              })
+                            }
                           />
                         </TableCell>
                         <TableCell>
@@ -326,7 +424,11 @@ export function InvoiceForm({
                             type="number"
                             step="0.01"
                             value={line.discountPct}
-                            onChange={(e) => updateLine(line.key, { discountPct: Number(e.target.value) })}
+                            onChange={(e) =>
+                              updateLine(line.key, {
+                                discountPct: Number(e.target.value),
+                              })
+                            }
                           />
                         </TableCell>
                         <TableCell>
@@ -335,10 +437,16 @@ export function InvoiceForm({
                             type="number"
                             step="0.01"
                             value={line.vatRate}
-                            onChange={(e) => updateLine(line.key, { vatRate: Number(e.target.value) })}
+                            onChange={(e) =>
+                              updateLine(line.key, {
+                                vatRate: Number(e.target.value),
+                              })
+                            }
                           />
                         </TableCell>
-                        <TableCell className="text-sm text-slate-600">{formatEUR(lineTotal)}</TableCell>
+                        <TableCell className="text-sm text-slate-600">
+                          {formatEUR(lineTotal)}
+                        </TableCell>
                         <TableCell>
                           <Button
                             type="button"
@@ -381,7 +489,9 @@ export function InvoiceForm({
           {invoice?.verifactuHash ? (
             <div className="space-y-2 rounded-lg border border-slate-100 bg-slate-50 p-3">
               <div className="flex items-center justify-between">
-                <p className="text-xs font-medium tracking-wide text-slate-400 uppercase">Verifactu</p>
+                <p className="text-xs font-medium tracking-wide text-slate-400 uppercase">
+                  Verifactu
+                </p>
                 <span
                   className={`rounded-full px-2 py-0.5 text-xs font-medium ${VERIFACTU_STATUS_STYLES[invoice.verifactuSubmissionStatus]}`}
                 >
@@ -389,8 +499,9 @@ export function InvoiceForm({
                 </span>
               </div>
               <p className="text-xs text-slate-500">
-                Registro generado con el formato oficial de la AEAT. El envío real requiere un
-                certificado digital que la organización todavía no tiene.
+                Registro generado con el formato oficial de la AEAT. El envío
+                real requiere un certificado digital que la organización todavía
+                no tiene.
               </p>
               <div className="flex items-start gap-3">
                 {invoice.verifactuQrImage ? (
@@ -402,9 +513,13 @@ export function InvoiceForm({
                   />
                 ) : null}
                 <div className="min-w-0 space-y-1">
-                  <p className="font-mono text-xs break-all text-slate-500">{invoice.verifactuHash}</p>
+                  <p className="font-mono text-xs break-all text-slate-500">
+                    {invoice.verifactuHash}
+                  </p>
                   {invoice.verifactuSubmissionError ? (
-                    <p className="text-xs text-red-600">{invoice.verifactuSubmissionError}</p>
+                    <p className="text-xs text-red-600">
+                      {invoice.verifactuSubmissionError}
+                    </p>
                   ) : null}
                 </div>
               </div>
@@ -428,7 +543,9 @@ export function InvoiceForm({
                   className="h-7 w-16"
                 />
               </span>
-              <span className="text-red-600">-{formatEUR(totals.discountAmount)}</span>
+              <span className="text-red-600">
+                -{formatEUR(totals.discountAmount)}
+              </span>
             </div>
             <div className="flex w-full max-w-xs items-center justify-between text-sm text-slate-500">
               <span>IVA</span>
@@ -455,7 +572,13 @@ export function InvoiceForm({
                   Cerrar
                 </Button>
               </Link>
-              <Button type="submit" name="intent" value="draft" variant="outline" disabled={pending}>
+              <Button
+                type="submit"
+                name="intent"
+                value="draft"
+                variant="outline"
+                disabled={pending}
+              >
                 {pending ? "Guardando..." : "Guardar borrador"}
               </Button>
               <Button
@@ -463,9 +586,13 @@ export function InvoiceForm({
                 name="intent"
                 value="confirm"
                 disabled={pending || Boolean(invoice?.number)}
-                className="bg-indigo-600 hover:bg-indigo-700"
+                className="bg-primary hover:bg-[#00A3A8]"
               >
-                {pending ? "Guardando..." : invoice?.number ? "Ya emitida" : "Emitir factura"}
+                {pending
+                  ? "Guardando..."
+                  : invoice?.number
+                    ? "Ya emitida"
+                    : "Emitir factura"}
               </Button>
             </div>
           </div>

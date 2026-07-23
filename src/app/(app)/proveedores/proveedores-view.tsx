@@ -4,14 +4,27 @@ import { useMemo, useState } from "react";
 import { Plus, Search } from "lucide-react";
 import { Input } from "@/components/ui/input";
 import { Button } from "@/components/ui/button";
-import { Table, TableBody, TableCell, TableHead, TableHeader, TableRow } from "@/components/ui/table";
+import {
+  Table,
+  TableBody,
+  TableCell,
+  TableHead,
+  TableHeader,
+  TableRow,
+} from "@/components/ui/table";
 import { DeleteConfirmButton } from "@/components/delete-confirm-button";
 import { formatEUR } from "@/lib/money-utils";
-import { ProviderFormDialog, type ProviderRecord } from "./provider-form-dialog";
+import {
+  ProviderFormDialog,
+  type ProviderRecord,
+} from "./provider-form-dialog";
 import { CsvImportDialog } from "./csv-import-dialog";
 import { deleteProvider } from "./actions";
 
-export type ProviderRow = ProviderRecord & { invoiceCount: number; totalPurchased: number };
+export type ProviderRow = ProviderRecord & {
+  invoiceCount: number;
+  totalPurchased: number;
+};
 
 export function ProveedoresView({ providers }: { providers: ProviderRow[] }) {
   const [query, setQuery] = useState("");
@@ -20,7 +33,9 @@ export function ProveedoresView({ providers }: { providers: ProviderRow[] }) {
     const q = query.trim().toLowerCase();
     if (!q) return providers;
     return providers.filter((p) =>
-      [p.name, p.taxId, p.email].filter(Boolean).some((v) => v!.toLowerCase().includes(q)),
+      [p.name, p.taxId, p.email]
+        .filter(Boolean)
+        .some((v) => v!.toLowerCase().includes(q)),
     );
   }, [providers, query]);
 
@@ -32,7 +47,10 @@ export function ProveedoresView({ providers }: { providers: ProviderRow[] }) {
           <CsvImportDialog />
           <ProviderFormDialog
             trigger={
-              <Button size="sm" className="gap-1.5 bg-indigo-600 hover:bg-indigo-700">
+              <Button
+                size="sm"
+                className="gap-1.5 bg-primary hover:bg-[#00A3A8]"
+              >
                 <Plus className="size-4" />
                 Nuevo proveedor
               </Button>
@@ -66,7 +84,10 @@ export function ProveedoresView({ providers }: { providers: ProviderRow[] }) {
           <TableBody>
             {filtered.length === 0 ? (
               <TableRow>
-                <TableCell colSpan={6} className="py-8 text-center text-slate-400">
+                <TableCell
+                  colSpan={6}
+                  className="py-8 text-center text-slate-400"
+                >
                   Sin proveedores.
                 </TableCell>
               </TableRow>
@@ -76,13 +97,21 @@ export function ProveedoresView({ providers }: { providers: ProviderRow[] }) {
                   <TableCell className="font-medium">
                     <ProviderFormDialog
                       provider={provider}
-                      trigger={<button className="hover:underline">{provider.name}</button>}
+                      trigger={
+                        <button className="hover:underline">
+                          {provider.name}
+                        </button>
+                      }
                     />
                   </TableCell>
                   <TableCell>{provider.taxId ?? "—"}</TableCell>
                   <TableCell>{provider.email ?? "—"}</TableCell>
-                  <TableCell className="text-right">{provider.invoiceCount}</TableCell>
-                  <TableCell className="text-right">{formatEUR(provider.totalPurchased)}</TableCell>
+                  <TableCell className="text-right">
+                    {provider.invoiceCount}
+                  </TableCell>
+                  <TableCell className="text-right">
+                    {formatEUR(provider.totalPurchased)}
+                  </TableCell>
                   <TableCell>
                     <DeleteConfirmButton
                       description={`Se eliminará a ${provider.name}.`}

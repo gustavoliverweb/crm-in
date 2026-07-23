@@ -49,7 +49,9 @@ export function CatalogFormDialog({
   trigger: React.ReactElement;
 }) {
   const [open, setOpen] = useState(false);
-  const action = item ? updateCatalogItem.bind(null, item.id) : createCatalogItem;
+  const action = item
+    ? updateCatalogItem.bind(null, item.id)
+    : createCatalogItem;
   const [state, formAction, pending] = useActionState(action, initialState);
   const wasPending = useRef(false);
 
@@ -207,15 +209,23 @@ export function CatalogFormDialog({
           ) : null}
 
           <div className="flex justify-end gap-2 pt-2">
-            <Button type="button" variant="outline" onClick={() => setOpen(false)}>
+            <Button
+              type="button"
+              variant="outline"
+              onClick={() => setOpen(false)}
+            >
               Cancelar
             </Button>
             <Button
               type="submit"
               disabled={pending}
-              className="bg-indigo-600 hover:bg-indigo-700"
+              className="bg-primary hover:bg-[#00A3A8]"
             >
-              {pending ? "Guardando..." : isEdit ? "Guardar cambios" : `Crear ${label}`}
+              {pending
+                ? "Guardando..."
+                : isEdit
+                  ? "Guardar cambios"
+                  : `Crear ${label}`}
             </Button>
           </div>
         </form>

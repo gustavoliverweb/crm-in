@@ -15,11 +15,19 @@ import {
   TableRow,
 } from "@/components/ui/table";
 import { DeleteConfirmButton } from "@/components/delete-confirm-button";
-import { ClientSearchField, type ClientOption } from "@/components/client-search-field";
+import {
+  ClientSearchField,
+  type ClientOption,
+} from "@/components/client-search-field";
 import { formatDateInput } from "@/lib/date-utils";
 import { BUDGET_STATUS_LABEL } from "@/lib/validations/budget";
 import { computeBudgetTotals, formatEUR } from "./budget-utils";
-import { createBudget, updateBudget, deleteBudget, type BudgetFormState } from "./actions";
+import {
+  createBudget,
+  updateBudget,
+  deleteBudget,
+  type BudgetFormState,
+} from "./actions";
 
 export type CatalogOption = {
   id: string;
@@ -86,8 +94,13 @@ export function BudgetForm({
     (budget?.lines ?? []).map((l, i) => ({ ...l, key: i })),
   );
   const [discountPct, setDiscountPct] = useState(budget?.discountPct ?? 0);
-  const [selectedClient, setSelectedClient] = useState<{ id: string; name: string } | null>(
-    budget?.clientId && budget.clientName ? { id: budget.clientId, name: budget.clientName } : null,
+  const [selectedClient, setSelectedClient] = useState<{
+    id: string;
+    name: string;
+  } | null>(
+    budget?.clientId && budget.clientName
+      ? { id: budget.clientId, name: budget.clientName }
+      : null,
   );
 
   function addCatalogLine(item: CatalogOption) {
@@ -121,7 +134,9 @@ export function BudgetForm({
   }
 
   function updateLine(key: number, patch: Partial<DraftLine>) {
-    setLines((prev) => prev.map((l) => (l.key === key ? { ...l, ...patch } : l)));
+    setLines((prev) =>
+      prev.map((l) => (l.key === key ? { ...l, ...patch } : l)),
+    );
   }
 
   function removeLine(key: number) {
@@ -132,14 +147,19 @@ export function BudgetForm({
 
   return (
     <div className="space-y-4">
-      <Link href="/presupuestos" className="text-sm text-indigo-700 hover:underline">
+      <Link
+        href="/presupuestos"
+        className="text-sm text-indigo-700 hover:underline"
+      >
         ← Volver a presupuestos
       </Link>
 
       <div className="rounded-lg border border-slate-200 bg-white p-6">
         <div className="mb-4 flex items-center justify-between">
           <h1 className="text-xl font-bold text-slate-900">
-            {isEdit ? `Presupuesto ${budget?.number ?? "(borrador)"}` : "Nuevo presupuesto"}
+            {isEdit
+              ? `Presupuesto ${budget?.number ?? "(borrador)"}`
+              : "Nuevo presupuesto"}
           </h1>
           <Link href="/presupuestos">
             <Button variant="ghost" size="icon-sm">
@@ -150,7 +170,9 @@ export function BudgetForm({
 
         <form action={formAction} className="space-y-4">
           {state.error ? (
-            <p className="rounded-md bg-red-50 px-3 py-2 text-sm text-red-700">{state.error}</p>
+            <p className="rounded-md bg-red-50 px-3 py-2 text-sm text-red-700">
+              {state.error}
+            </p>
           ) : null}
 
           <div className="grid grid-cols-3 gap-4">
@@ -168,12 +190,20 @@ export function BudgetForm({
                 id="validUntil"
                 name="validUntil"
                 type="date"
-                defaultValue={budget?.validUntil ? formatDateInput(budget.validUntil) : ""}
+                defaultValue={
+                  budget?.validUntil ? formatDateInput(budget.validUntil) : ""
+                }
               />
             </div>
             <div className="space-y-1">
               <Label htmlFor="irpfRate">IRPF %</Label>
-              <Input id="irpfRate" name="irpfRate" type="number" step="0.01" defaultValue={budget?.irpfRate ?? 0} />
+              <Input
+                id="irpfRate"
+                name="irpfRate"
+                type="number"
+                step="0.01"
+                defaultValue={budget?.irpfRate ?? 0}
+              />
             </div>
           </div>
 
@@ -198,7 +228,9 @@ export function BudgetForm({
             <select
               value=""
               onChange={(e) => {
-                const item = serviceOptions.find((s) => s.id === e.target.value);
+                const item = serviceOptions.find(
+                  (s) => s.id === e.target.value,
+                );
                 if (item) addCatalogLine(item);
               }}
               className="h-8 w-full rounded-lg border border-slate-200 bg-slate-50 px-2.5 text-sm text-slate-500"
@@ -213,7 +245,9 @@ export function BudgetForm({
             <select
               value=""
               onChange={(e) => {
-                const item = productOptions.find((p) => p.id === e.target.value);
+                const item = productOptions.find(
+                  (p) => p.id === e.target.value,
+                );
                 if (item) addCatalogLine(item);
               }}
               className="h-8 w-full rounded-lg border border-slate-200 bg-slate-50 px-2.5 text-sm text-slate-500"
@@ -227,14 +261,22 @@ export function BudgetForm({
             </select>
           </div>
 
-          <Button type="button" variant="outline" size="sm" className="gap-1.5" onClick={addBlankLine}>
+          <Button
+            type="button"
+            variant="outline"
+            size="sm"
+            className="gap-1.5"
+            onClick={addBlankLine}
+          >
             <Plus className="size-4" />
             Partida
           </Button>
 
           <div className="rounded-lg border border-slate-200">
             {lines.length === 0 ? (
-              <p className="py-8 text-center text-sm text-slate-400">Sin partidas.</p>
+              <p className="py-8 text-center text-sm text-slate-400">
+                Sin partidas.
+              </p>
             ) : (
               <Table>
                 <TableHeader>
@@ -251,16 +293,26 @@ export function BudgetForm({
                 <TableBody>
                   {lines.map((line) => {
                     const lineTotal =
-                      line.quantity * line.unitPrice * (1 - line.discountPct / 100) *
+                      line.quantity *
+                      line.unitPrice *
+                      (1 - line.discountPct / 100) *
                       (1 + line.vatRate / 100);
                     return (
                       <TableRow key={line.key}>
                         <TableCell>
-                          <input type="hidden" name="lineCatalogItemId" value={line.catalogItemId ?? ""} />
+                          <input
+                            type="hidden"
+                            name="lineCatalogItemId"
+                            value={line.catalogItemId ?? ""}
+                          />
                           <Input
                             name="lineDescription"
                             value={line.description}
-                            onChange={(e) => updateLine(line.key, { description: e.target.value })}
+                            onChange={(e) =>
+                              updateLine(line.key, {
+                                description: e.target.value,
+                              })
+                            }
                             required
                           />
                         </TableCell>
@@ -270,7 +322,11 @@ export function BudgetForm({
                             type="number"
                             step="0.01"
                             value={line.quantity}
-                            onChange={(e) => updateLine(line.key, { quantity: Number(e.target.value) })}
+                            onChange={(e) =>
+                              updateLine(line.key, {
+                                quantity: Number(e.target.value),
+                              })
+                            }
                           />
                         </TableCell>
                         <TableCell>
@@ -279,7 +335,11 @@ export function BudgetForm({
                             type="number"
                             step="0.01"
                             value={line.unitPrice}
-                            onChange={(e) => updateLine(line.key, { unitPrice: Number(e.target.value) })}
+                            onChange={(e) =>
+                              updateLine(line.key, {
+                                unitPrice: Number(e.target.value),
+                              })
+                            }
                           />
                         </TableCell>
                         <TableCell>
@@ -288,7 +348,11 @@ export function BudgetForm({
                             type="number"
                             step="0.01"
                             value={line.discountPct}
-                            onChange={(e) => updateLine(line.key, { discountPct: Number(e.target.value) })}
+                            onChange={(e) =>
+                              updateLine(line.key, {
+                                discountPct: Number(e.target.value),
+                              })
+                            }
                           />
                         </TableCell>
                         <TableCell>
@@ -297,10 +361,16 @@ export function BudgetForm({
                             type="number"
                             step="0.01"
                             value={line.vatRate}
-                            onChange={(e) => updateLine(line.key, { vatRate: Number(e.target.value) })}
+                            onChange={(e) =>
+                              updateLine(line.key, {
+                                vatRate: Number(e.target.value),
+                              })
+                            }
                           />
                         </TableCell>
-                        <TableCell className="text-sm text-slate-600">{formatEUR(lineTotal)}</TableCell>
+                        <TableCell className="text-sm text-slate-600">
+                          {formatEUR(lineTotal)}
+                        </TableCell>
                         <TableCell>
                           <Button
                             type="button"
@@ -327,7 +397,9 @@ export function BudgetForm({
                 id="paymentTerms"
                 name="paymentTerms"
                 rows={3}
-                placeholder={"1 PAGO ... A LA FORMALIZACIÓN\n2 PAGO ... A FINALIZAR"}
+                placeholder={
+                  "1 PAGO ... A LA FORMALIZACIÓN\n2 PAGO ... A FINALIZAR"
+                }
                 defaultValue={budget?.paymentTerms ?? ""}
                 className="w-full rounded-lg border border-input bg-transparent px-2.5 py-1.5 text-sm"
               />
@@ -382,7 +454,9 @@ export function BudgetForm({
                   className="h-7 w-16"
                 />
               </span>
-              <span className="text-red-600">-{formatEUR(totals.discountAmount)}</span>
+              <span className="text-red-600">
+                -{formatEUR(totals.discountAmount)}
+              </span>
             </div>
             <div className="flex w-full max-w-xs items-center justify-between text-sm text-slate-500">
               <span>IVA</span>
@@ -409,7 +483,13 @@ export function BudgetForm({
                   Cerrar
                 </Button>
               </Link>
-              <Button type="submit" name="intent" value="draft" variant="outline" disabled={pending}>
+              <Button
+                type="submit"
+                name="intent"
+                value="draft"
+                variant="outline"
+                disabled={pending}
+              >
                 {pending ? "Guardando..." : "Guardar borrador"}
               </Button>
               <Button
@@ -417,7 +497,7 @@ export function BudgetForm({
                 name="intent"
                 value="confirm"
                 disabled={pending}
-                className="bg-indigo-600 hover:bg-indigo-700"
+                className="bg-primary hover:bg-[#00A3A8]"
               >
                 {pending ? "Guardando..." : "Confirmar y numerar"}
               </Button>

@@ -66,7 +66,10 @@ export function ClientesTabs({
           <TabsContent value="clientes" className="m-0 flex-none">
             <ClientFormDialog
               trigger={
-                <Button size="sm" className="gap-1.5 bg-indigo-600 hover:bg-indigo-700">
+                <Button
+                  size="sm"
+                  className="gap-1.5 bg-primary hover:bg-[#00A3A8]"
+                >
                   <Plus className="size-4" />
                   Nuevo
                 </Button>
@@ -76,7 +79,10 @@ export function ClientesTabs({
           <TabsContent value="contactos" className="m-0 flex-none">
             <ContactFormDialog
               trigger={
-                <Button size="sm" className="gap-1.5 bg-indigo-600 hover:bg-indigo-700">
+                <Button
+                  size="sm"
+                  className="gap-1.5 bg-primary hover:bg-[#00A3A8]"
+                >
                   <Plus className="size-4" />
                   Nuevo
                 </Button>
@@ -112,7 +118,10 @@ export function ClientesTabs({
             <TableBody>
               {filteredClients.length === 0 ? (
                 <TableRow>
-                  <TableCell colSpan={6} className="py-8 text-center text-slate-400">
+                  <TableCell
+                    colSpan={6}
+                    className="py-8 text-center text-slate-400"
+                  >
                     Sin resultados.
                   </TableCell>
                 </TableRow>
@@ -169,7 +178,10 @@ export function ClientesTabs({
             <TableBody>
               {filteredContacts.length === 0 ? (
                 <TableRow>
-                  <TableCell colSpan={4} className="py-8 text-center text-slate-400">
+                  <TableCell
+                    colSpan={4}
+                    className="py-8 text-center text-slate-400"
+                  >
                     Sin contactos.
                   </TableCell>
                 </TableRow>
@@ -180,7 +192,9 @@ export function ClientesTabs({
                       <ContactFormDialog
                         contact={contact}
                         trigger={
-                          <button className="hover:underline">{contact.name}</button>
+                          <button className="hover:underline">
+                            {contact.name}
+                          </button>
                         }
                       />
                     </TableCell>

@@ -46,7 +46,13 @@ function CatalogTable({
       <Table>
         <TableHeader>
           <TableRow>
-            <TableHead>{type === "PRODUCTO" ? "Producto" : type === "EXTRA" ? "Extra" : "Servicio"}</TableHead>
+            <TableHead>
+              {type === "PRODUCTO"
+                ? "Producto"
+                : type === "EXTRA"
+                  ? "Extra"
+                  : "Servicio"}
+            </TableHead>
             {type === "SERVICIO" ? <TableHead>Duración</TableHead> : null}
             {type === "PRODUCTO" ? <TableHead>SKU</TableHead> : null}
             <TableHead>Precio base</TableHead>
@@ -72,7 +78,9 @@ function CatalogTable({
                   <CatalogFormDialog
                     type={type}
                     item={item}
-                    trigger={<button className="hover:underline">{item.name}</button>}
+                    trigger={
+                      <button className="hover:underline">{item.name}</button>
+                    }
                   />
                 </TableCell>
                 {type === "SERVICIO" ? (
@@ -80,7 +88,9 @@ function CatalogTable({
                     {item.durationMinutes ? `${item.durationMinutes} min` : "—"}
                   </TableCell>
                 ) : null}
-                {type === "PRODUCTO" ? <TableCell>{item.sku ?? "—"}</TableCell> : null}
+                {type === "PRODUCTO" ? (
+                  <TableCell>{item.sku ?? "—"}</TableCell>
+                ) : null}
                 <TableCell>{formatEUR(item.basePrice)}</TableCell>
                 <TableCell>{Number(item.vatRate)}%</TableCell>
                 <TableCell>
@@ -124,13 +134,20 @@ export function CatalogoTabs({
 
         <div className="flex items-center gap-2">
           {TABS.map((tab) => (
-            <TabsContent key={tab.value} value={tab.value} className="m-0 flex-none">
+            <TabsContent
+              key={tab.value}
+              value={tab.value}
+              className="m-0 flex-none"
+            >
               <div className="flex items-center gap-2">
                 <CsvImportDialog type={tab.value} />
                 <CatalogFormDialog
                   type={tab.value}
                   trigger={
-                    <Button size="sm" className="gap-1.5 bg-indigo-600 hover:bg-indigo-700">
+                    <Button
+                      size="sm"
+                      className="gap-1.5 bg-primary hover:bg-[#00A3A8]"
+                    >
                       <Plus className="size-4" />
                       {tab.newLabel}
                     </Button>

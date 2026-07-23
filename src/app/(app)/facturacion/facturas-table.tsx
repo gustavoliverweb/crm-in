@@ -18,7 +18,11 @@ import { cn } from "@/lib/utils";
 import { formatEUR } from "@/lib/money-utils";
 import { INVOICE_STATUS_LABEL } from "@/lib/validations/invoice";
 import { FacturacionNav } from "./facturacion-nav";
-import { PeriodFilter, currentYearRange, type PeriodValue } from "@/components/period-filter";
+import {
+  PeriodFilter,
+  currentYearRange,
+  type PeriodValue,
+} from "@/components/period-filter";
 import { markInvoicePaid } from "./actions";
 
 export type InvoiceRow = {
@@ -57,7 +61,9 @@ const STATUS_STYLES: Record<InvoiceRow["status"], string> = {
 };
 
 function isOverdue(row: InvoiceRow) {
-  return row.status === "EMITIDA" && row.dueDate !== null && row.dueDate < new Date();
+  return (
+    row.status === "EMITIDA" && row.dueDate !== null && row.dueDate < new Date()
+  );
 }
 
 function displayStatus(row: InvoiceRow): InvoiceRow["status"] {
@@ -66,12 +72,18 @@ function displayStatus(row: InvoiceRow): InvoiceRow["status"] {
 
 function formatDate(d: Date | null) {
   if (!d) return "—";
-  return d.toLocaleDateString("es-ES", { day: "2-digit", month: "2-digit", year: "numeric" });
+  return d.toLocaleDateString("es-ES", {
+    day: "2-digit",
+    month: "2-digit",
+    year: "numeric",
+  });
 }
 
 export function FacturasTable({ rows }: { rows: InvoiceRow[] }) {
-  const [statusTab, setStatusTab] = useState<(typeof STATUS_TABS)[number]["value"]>("TODAS");
-  const [typeTab, setTypeTab] = useState<(typeof TYPE_TABS)[number]["value"]>("TODOS");
+  const [statusTab, setStatusTab] =
+    useState<(typeof STATUS_TABS)[number]["value"]>("TODAS");
+  const [typeTab, setTypeTab] =
+    useState<(typeof TYPE_TABS)[number]["value"]>("TODOS");
   const [query, setQuery] = useState("");
   const [period, setPeriod] = useState<PeriodValue>(() => currentYearRange());
 
@@ -85,7 +97,12 @@ export function FacturasTable({ rows }: { rows: InvoiceRow[] }) {
       if (statusTab === "PENDIENTE" && status !== "EMITIDA") return false;
       if (statusTab === "BORRADOR" && status !== "BORRADOR") return false;
       if (typeTab !== "TODOS" && r.type !== typeTab) return false;
-      if (q && ![r.clientName, r.clientTaxId].filter(Boolean).some((v) => v!.toLowerCase().includes(q))) {
+      if (
+        q &&
+        ![r.clientName, r.clientTaxId]
+          .filter(Boolean)
+          .some((v) => v!.toLowerCase().includes(q))
+      ) {
         return false;
       }
       if (period.from && r.createdAt < period.from) return false;
@@ -95,7 +112,16 @@ export function FacturasTable({ rows }: { rows: InvoiceRow[] }) {
   }, [rows, statusTab, typeTab, query, period]);
 
   function exportCsv() {
-    const header = ["Número", "Cliente", "Fecha", "Vence", "Base imponible", "IVA", "Total", "Estado"];
+    const header = [
+      "Número",
+      "Cliente",
+      "Fecha",
+      "Vence",
+      "Base imponible",
+      "IVA",
+      "Total",
+      "Estado",
+    ];
     const lines = filtered.map((r) =>
       [
         r.number ?? "",
@@ -134,12 +160,17 @@ export function FacturasTable({ rows }: { rows: InvoiceRow[] }) {
 
       <div className="flex items-center gap-2">
         <Link href="/facturacion/nuevo">
-          <Button size="sm" className="gap-1.5 bg-indigo-600 hover:bg-indigo-700">
+          <Button size="sm" className="gap-1.5 bg-primary hover:bg-[#00A3A8]">
             <Plus className="size-4" />
             Nueva factura
           </Button>
         </Link>
-        <Button variant="outline" size="sm" className="gap-1.5" onClick={exportCsv}>
+        <Button
+          variant="outline"
+          size="sm"
+          className="gap-1.5"
+          onClick={exportCsv}
+        >
           <Download className="size-4" />
           CSV
         </Button>
@@ -205,7 +236,10 @@ export function FacturasTable({ rows }: { rows: InvoiceRow[] }) {
           <TableBody>
             {filtered.length === 0 ? (
               <TableRow>
-                <TableCell colSpan={10} className="py-8 text-center text-slate-400">
+                <TableCell
+                  colSpan={10}
+                  className="py-8 text-center text-slate-400"
+                >
                   Sin facturas.
                 </TableCell>
               </TableRow>
@@ -215,7 +249,10 @@ export function FacturasTable({ rows }: { rows: InvoiceRow[] }) {
                 return (
                   <TableRow key={r.id}>
                     <TableCell className="font-medium">
-                      <Link href={`/facturacion/${r.id}`} className="hover:underline">
+                      <Link
+                        href={`/facturacion/${r.id}`}
+                        className="hover:underline"
+                      >
                         {r.number ?? "Borrador"}
                       </Link>
                     </TableCell>
@@ -224,7 +261,9 @@ export function FacturasTable({ rows }: { rows: InvoiceRow[] }) {
                     <TableCell>{formatDate(r.dueDate)}</TableCell>
                     <TableCell>{formatEUR(r.baseImponible)}</TableCell>
                     <TableCell>{formatEUR(r.ivaTotal)}</TableCell>
-                    <TableCell className="font-medium">{formatEUR(r.total)}</TableCell>
+                    <TableCell className="font-medium">
+                      {formatEUR(r.total)}
+                    </TableCell>
                     <TableCell>
                       <Badge className={cn("border-0", STATUS_STYLES[status])}>
                         {INVOICE_STATUS_LABEL[status]}

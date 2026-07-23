@@ -37,9 +37,7 @@ export function ContactFormDialog({
   trigger: React.ReactElement;
 }) {
   const [open, setOpen] = useState(false);
-  const action = contact
-    ? updateContact.bind(null, contact.id)
-    : createContact;
+  const action = contact ? updateContact.bind(null, contact.id) : createContact;
   const [state, formAction, pending] = useActionState(action, initialState);
   const wasPending = useRef(false);
 
@@ -57,7 +55,9 @@ export function ContactFormDialog({
       <DialogTrigger render={trigger} />
       <DialogContent className="max-w-md">
         <DialogHeader>
-          <DialogTitle>{isEdit ? "Editar contacto" : "Nuevo contacto"}</DialogTitle>
+          <DialogTitle>
+            {isEdit ? "Editar contacto" : "Nuevo contacto"}
+          </DialogTitle>
         </DialogHeader>
 
         <form
@@ -73,7 +73,12 @@ export function ContactFormDialog({
 
           <div className="space-y-1">
             <Label htmlFor="name">Nombre *</Label>
-            <Input id="name" name="name" required defaultValue={contact?.name} />
+            <Input
+              id="name"
+              name="name"
+              required
+              defaultValue={contact?.name}
+            />
           </div>
 
           <div className="space-y-1">
@@ -88,7 +93,11 @@ export function ContactFormDialog({
 
           <div className="space-y-1">
             <Label htmlFor="phone">Teléfono</Label>
-            <Input id="phone" name="phone" defaultValue={contact?.phone ?? ""} />
+            <Input
+              id="phone"
+              name="phone"
+              defaultValue={contact?.phone ?? ""}
+            />
           </div>
 
           <div className="space-y-1">
@@ -112,15 +121,23 @@ export function ContactFormDialog({
           </div>
 
           <div className="flex justify-end gap-2 pt-2">
-            <Button type="button" variant="outline" onClick={() => setOpen(false)}>
+            <Button
+              type="button"
+              variant="outline"
+              onClick={() => setOpen(false)}
+            >
               Cancelar
             </Button>
             <Button
               type="submit"
               disabled={pending}
-              className="bg-indigo-600 hover:bg-indigo-700"
+              className="bg-primary hover:bg-[#00A3A8]"
             >
-              {pending ? "Guardando..." : isEdit ? "Guardar cambios" : "Crear contacto"}
+              {pending
+                ? "Guardando..."
+                : isEdit
+                  ? "Guardar cambios"
+                  : "Crear contacto"}
             </Button>
           </div>
         </form>

@@ -15,6 +15,8 @@ import {
   Settings,
 } from "lucide-react";
 import { cn } from "@/lib/utils";
+import Image from "next/image";
+import logo from "../../../public/logo.png";
 
 const NAV_ITEMS = [
   { href: "/", label: "Inicio", icon: Home },
@@ -33,17 +35,22 @@ export function SidebarNav() {
   const pathname = usePathname();
 
   return (
-    <aside className="flex w-56 shrink-0 flex-col border-r border-indigo-900 bg-indigo-950">
-      <div className="px-5 py-4">
-        <Link href="/" className="text-lg font-bold text-white">
-          intalva
+    <aside className="flex w-56 shrink-0 flex-col border-r border-indigo-900 bg-[#0E1B38]">
+      <div className="px-3 py-4">
+        <Link
+          href="/"
+          className="text-lg font-bold text-white  bg-white p-2 rounded-lg flex justify-center items-center"
+        >
+          <Image src={logo} alt="Logo" width={80} height={80} />
         </Link>
       </div>
 
       <nav className="flex flex-1 flex-col gap-0.5 px-3 pb-4">
         {NAV_ITEMS.map((item) => {
           const isActive =
-            item.href === "/" ? pathname === "/" : pathname.startsWith(item.href);
+            item.href === "/"
+              ? pathname === "/"
+              : pathname.startsWith(item.href);
           const Icon = item.icon;
 
           return (
@@ -53,7 +60,7 @@ export function SidebarNav() {
               className={cn(
                 "flex items-center gap-2.5 rounded-lg px-3 py-2 text-sm font-medium transition-colors",
                 isActive
-                  ? "bg-indigo-900/60 text-white"
+                  ? "bg-[#00A3A8] text-white"
                   : "text-indigo-200/70 hover:bg-indigo-900/40 hover:text-white",
               )}
             >

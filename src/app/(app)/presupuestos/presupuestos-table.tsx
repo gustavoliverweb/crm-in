@@ -49,11 +49,22 @@ const STATUS_STYLES: Record<BudgetRow["status"], string> = {
 
 function formatDate(d: Date | null) {
   if (!d) return "—";
-  return d.toLocaleDateString("es-ES", { day: "2-digit", month: "2-digit", year: "numeric" });
+  return d.toLocaleDateString("es-ES", {
+    day: "2-digit",
+    month: "2-digit",
+    year: "numeric",
+  });
 }
 
 function toCsv(rows: BudgetRow[]) {
-  const header = ["Número", "Cliente", "Fecha", "Válido hasta", "Total", "Estado"];
+  const header = [
+    "Número",
+    "Cliente",
+    "Fecha",
+    "Válido hasta",
+    "Total",
+    "Estado",
+  ];
   const lines = rows.map((r) =>
     [
       r.number ?? "",
@@ -82,7 +93,12 @@ export function PresupuestosTable({ rows }: { rows: BudgetRow[] }) {
 
     return rows.filter((r) => {
       if (status !== "TODOS" && r.status !== status) return false;
-      if (q && ![r.clientName, r.clientTaxId].filter(Boolean).some((v) => v!.toLowerCase().includes(q))) {
+      if (
+        q &&
+        ![r.clientName, r.clientTaxId]
+          .filter(Boolean)
+          .some((v) => v!.toLowerCase().includes(q))
+      ) {
         return false;
       }
       if (fromDate && r.createdAt < fromDate) return false;
@@ -92,7 +108,9 @@ export function PresupuestosTable({ rows }: { rows: BudgetRow[] }) {
   }, [rows, status, query, from, to]);
 
   function exportCsv() {
-    const blob = new Blob([toCsv(filtered)], { type: "text/csv;charset=utf-8;" });
+    const blob = new Blob([toCsv(filtered)], {
+      type: "text/csv;charset=utf-8;",
+    });
     const url = URL.createObjectURL(blob);
     const a = document.createElement("a");
     a.href = url;
@@ -106,21 +124,39 @@ export function PresupuestosTable({ rows }: { rows: BudgetRow[] }) {
       <div className="flex flex-wrap items-center justify-between gap-3">
         <h1 className="text-2xl font-bold text-slate-900">Presupuestos</h1>
         <div className="flex items-center gap-2">
-          <Input type="date" value={from} onChange={(e) => setFrom(e.target.value)} className="w-36" />
+          <Input
+            type="date"
+            value={from}
+            onChange={(e) => setFrom(e.target.value)}
+            className="w-36"
+          />
           <span className="text-sm text-slate-400">—</span>
-          <Input type="date" value={to} onChange={(e) => setTo(e.target.value)} className="w-36" />
+          <Input
+            type="date"
+            value={to}
+            onChange={(e) => setTo(e.target.value)}
+            className="w-36"
+          />
         </div>
       </div>
 
       <div className="flex flex-wrap items-center justify-between gap-3">
         <div className="flex items-center gap-2">
           <Link href="/presupuestos/nuevo">
-            <Button size="sm" className="gap-1.5 bg-indigo-600 hover:bg-indigo-700">
+            <Button
+              size="sm"
+              className="gap-1.5  bg-primary hover:bg-[#00A3A8]"
+            >
               <Plus className="size-4" />
               Nuevo presupuesto
             </Button>
           </Link>
-          <Button variant="outline" size="sm" className="gap-1.5" onClick={exportCsv}>
+          <Button
+            variant="outline"
+            size="sm"
+            className="gap-1.5"
+            onClick={exportCsv}
+          >
             <Download className="size-4" />
             CSV
           </Button>
@@ -168,7 +204,10 @@ export function PresupuestosTable({ rows }: { rows: BudgetRow[] }) {
           <TableBody>
             {filtered.length === 0 ? (
               <TableRow>
-                <TableCell colSpan={7} className="py-8 text-center text-slate-400">
+                <TableCell
+                  colSpan={7}
+                  className="py-8 text-center text-slate-400"
+                >
                   Sin presupuestos.
                 </TableCell>
               </TableRow>
@@ -176,7 +215,10 @@ export function PresupuestosTable({ rows }: { rows: BudgetRow[] }) {
               filtered.map((r) => (
                 <TableRow key={r.id}>
                   <TableCell className="font-medium">
-                    <Link href={`/presupuestos/${r.id}`} className="hover:underline">
+                    <Link
+                      href={`/presupuestos/${r.id}`}
+                      className="hover:underline"
+                    >
                       {r.number ?? "Borrador"}
                     </Link>
                   </TableCell>
