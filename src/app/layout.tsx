@@ -13,7 +13,7 @@ const geistMono = Geist_Mono({
 });
 
 export const metadata: Metadata = {
-  title: "Intalva CRM",
+  title: "Opertia",
   description: "CRM todo-en-uno para gestionar tu negocio",
 };
 
